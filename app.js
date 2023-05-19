@@ -6,6 +6,10 @@ let initialZoom = 7;
 const resetControl = L.control({position: 'topleft'});
 const logo = L.control({position: 'topright'});
 
+setTimeout(function () {
+    location.reload();
+  }, 5 * 60 * 1000)
+
 map = L.map('map').setView([initialLat, initialLng], initialZoom); // Centered at NE
 
 L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
