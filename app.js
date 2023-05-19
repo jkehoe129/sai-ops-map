@@ -127,7 +127,7 @@ function plotAddresses(addresses) {
                     console.error('Invalid coordinates', coords);
                     return;
                 }
-            
+
                 const icon = icons[address.jobType] || L.Icon.Default; // Use default icon if job type is not recognized
                 const marker = L.marker([coords.lat, coords.lng], {icon: icon}).addTo(map);
                 
