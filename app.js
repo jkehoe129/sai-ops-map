@@ -31,9 +31,10 @@ async function handleFile() {
 
 resetControl.onAdd = function (map) {
     const resetButton = L.DomUtil.create('button', 'reset-button');
-    resetButton.innerHTML = 'Reset Map';
+    resetButton.innerHTML = 'Reset/Refresh Map';
     resetButton.onclick = function () {
         map.setView([initialLat, initialLng], initialZoom);
+        location.reload();
     };
     return resetButton;
 };
