@@ -1,0 +1,67 @@
+body {
+    font-family: 'Lato', sans-serif;
+    /* letter-spacing: 1px; */
+}
+
+#container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+#map-container {
+    width: 75%;
+    height: 100%;
+    position: relative;
+}
+
+#map {
+    width: 100%;
+    height: calc(100% - 50px);
+}
+
+button{
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #D4493A;
+}
+
+#reset {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
+
+#list {
+    border-collapse: collapse;
+    width: 25%;
+    height: 15%;
+    font-size: 12px;
+    overflow: auto;
+}
+
+#list td, #list th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#list tr:nth-child(even){background-color: #f2f2f2;}
+
+#list th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+tr:hover{
+    background-color: #E5C07B;
+    transition: background-color .4s ease-in-out;
+}
+
+#list tr:nth-child(even):hover{
+    background-color: #E5C07B;
+}
+
