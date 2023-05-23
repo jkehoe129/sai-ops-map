@@ -77,8 +77,7 @@ fetch('us-states.json')
                 jobType: columns[4],
                 jobDesc: columns[5], 
                 jobOwner: columns[6],
-                jobSage: columns[7],
-                jobPrice: Intl.NumberFormat('en-US',columns[8])
+                jobSage: columns[7]
             };
         });
     }
@@ -137,8 +136,7 @@ function plotAddresses(addresses) {
                 marker.bindTooltip(`${address.jobName}
                 <br>${address.jobOwner.toUpperCase()}
                 <br>${address.jobDesc}
-                <br>${address.jobSage}
-                <br>${address.jobPrice}`
+                <br>${address.jobSage}`
                 );
 
                 // Add click event to marker
