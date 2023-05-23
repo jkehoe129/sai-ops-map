@@ -78,7 +78,7 @@ fetch('us-states.json')
                 jobDesc: columns[5], 
                 jobOwner: columns[6],
                 jobSage: columns[7],
-                jobPrice: columns[8]
+                jobPrice: Intl.NumberFormat('en-US',columns[8])
             };
         });
     }
