@@ -1,7 +1,7 @@
 let map;
 let markers = [];
-let initialLat = 44.2;
-let initialLng = -72.3;
+let initialLat = 42.74;
+let initialLng = -73.26;
 let initialZoom = 7;
 const resetControl = L.control({position: 'topleft'});
 const logo = L.control({position: 'topright'});
