@@ -157,6 +157,16 @@ function plotAddresses(addresses) {
                 row.addEventListener('click', function() {
                     map.setView([coords.lat, coords.lng], 15);
                 });
+
+                // Add the marker animation when hovering over a table row
+                row.addEventListener('mouseover', function() {
+                    marker.setOpacity(0.5); // Set the opacity to a lower value
+                });
+
+                row.addEventListener('mouseout', function() {
+                    marker.setOpacity(1); // Reset the opacity back to 1
+                });
+
             })
             .catch(error => console.error('Geocoding error', error));   
     });
