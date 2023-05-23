@@ -105,10 +105,10 @@ async function geocodeAddress(address) {
 
 
 const icons = {
-    'EVCI': L.icon({iconUrl: 'green-icon.png',shadowUrl: 'marker-shadow.png', iconSize: [25, 41], iconAnchor: [12, 41],shadowAnchor: [12, 41],shadowSize: [41, 41]}),
-    'Telecom-DAS': L.icon({iconUrl: 'blue-icon.png',shadowUrl: 'marker-shadow.png', iconSize: [25, 41], iconAnchor: [12, 41],shadowAnchor: [12, 41],shadowSize: [41, 41]}),
-    'Telecom-Tower': L.icon({iconUrl: 'gold-icon.png',shadowUrl: 'marker-shadow.png', iconSize: [25, 41], iconAnchor: [12, 41],shadowAnchor: [12, 41],shadowSize: [41, 41]}),
-    'HQ': L.icon({iconUrl: 'orange-icon.png',shadowUrl: 'marker-shadow.png', iconSize: [25, 41], iconAnchor: [12, 41],shadowAnchor: [12, 41],shadowSize: [41, 41]})
+    '2.EVCI': L.icon({iconUrl: 'green-icon.png',shadowUrl: 'marker-shadow.png', iconSize: [25, 41], iconAnchor: [12, 41],shadowAnchor: [12, 41],shadowSize: [41, 41]}),
+    '4.Telecom-DAS': L.icon({iconUrl: 'blue-icon.png',shadowUrl: 'marker-shadow.png', iconSize: [25, 41], iconAnchor: [12, 41],shadowAnchor: [12, 41],shadowSize: [41, 41]}),
+    '3.Telecom-Tower': L.icon({iconUrl: 'gold-icon.png',shadowUrl: 'marker-shadow.png', iconSize: [25, 41], iconAnchor: [12, 41],shadowAnchor: [12, 41],shadowSize: [41, 41]}),
+    '1.HQ': L.icon({iconUrl: 'orange-icon.png',shadowUrl: 'marker-shadow.png', iconSize: [25, 41], iconAnchor: [12, 41],shadowAnchor: [12, 41],shadowSize: [41, 41]})
 };
 
 function plotAddresses(addresses) {
