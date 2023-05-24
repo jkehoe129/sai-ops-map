@@ -3,12 +3,24 @@ let markers = [];
 let initialLat = 42.74;
 let initialLng = -73.26;
 let initialZoom = 6;
+
 const resetControl = L.control({position: 'topleft'});
 const logo = L.control({position: 'topright'});
+
 
 setTimeout(function () {
     location.reload();
   }, 5 * 60 * 1000)
+
+function updateDateTime() {
+const datetimeBox = document.getElementById('datetime-box');
+const now = new Date();
+const datetimeString = now.toLocaleString(); // Customize the date and time format if needed
+datetimeBox.textContent = 'Last Modified: ' + datetimeString;
+}
+
+// Call the function immediately when the script loads
+updateDateTime();
 
 map = L.map('map').setView([initialLat, initialLng], initialZoom); // Centered at NE
 
