@@ -34,7 +34,7 @@ resetControl.onAdd = function (map) {
     resetButton.innerHTML = 'Reset Map';
     resetButton.onclick = function () {
         map.setView([initialLat, initialLng], initialZoom);
-        location.reload();
+        // location.reload();
     };
     return resetButton;
 };
