@@ -127,60 +127,74 @@ function plotAddresses(addresses) {
     // Clear old markers
     markers.forEach(marker => map.removeLayer(marker));
     markers = [];
-
+  
     const list = document.getElementById('list');
     while (list.rows.length > 1) {
-        list.deleteRow(1); // Clear old list but keep header
+      list.deleteRow(1); // Clear old list but keep header
     }
-
+  
     addresses.forEach((address, index) => {
-        geocodeAddress(address.address)
-            .then(coords => {
-                if (isNaN(coords.lat) || isNaN(coords.lng)) {
-                    console.error('Invalid coordinates', coords);
-                    return;
-                }
-
-                const icon = icons[address.jobType] || L.Icon.Default; // Use default icon if job type is not recognized
-                const marker = L.marker([coords.lat, coords.lng], {icon: icon}).addTo(map);
-                
-                // Add Tooltip
-                marker.bindTooltip(`${address.jobName}
-                <br>${address.jobOwner.toUpperCase()}
-                <br>${address.jobDesc}
-                <br>${address.jobSage}`
-                );
-
-                // Add click event to marker
-                marker.on('click', function(e) {
-                    map.setView(e.target.getLatLng(), 15);
-                });
-
-                markers.push(marker);
-
-                const row = list.insertRow();
-                let cell = row.insertCell();
-                cell.textContent = address.jobName;
-                cell = row.insertCell();
-                cell.textContent = address.jobType;
-                cell = row.insertCell();
-                cell.textContent = address.state.substring(0,2);
-                
-                // Zoom to pin after clicking on project in table
-                row.addEventListener('click', function() {
-                    map.setView([coords.lat, coords.lng], 15);
-                });
-
-                // Add the marker animation when hovering over a table row
-                row.addEventListener('mouseover', function() {
-                    marker.setOpacity(0.5); // Set the opacity to a lower value
-                });
-
-                row.addEventListener('mouseout', function() {
-                    marker.setOpacity(1); // Reset the opacity back to 1
-                });
-
-            })
-            .catch(error => console.error('Geocoding error', error));   
+      if (!address.address) {
+        // Skip geocoding for empty address
+        console.error('Empty address');
+        return;
+      }
+  
+      geocodeAddress(address.address)
+        .then(coords => {
+          if (isNaN(coords.lat) || isNaN(coords.lng)) {
+            console.error('Invalid coordinates', coords);
+            return;
+          }
+  
+          const icon = icons[address.jobType] || L.Icon.Default; // Use default icon if job type is not recognized
+          const marker = L.marker([coords.lat, coords.lng], { icon: icon });
+          
+          // Add Tooltip
+          marker.bindTooltip(
+            `${address.jobName}
+            <br>${address.jobOwner.toUpperCase()}
+            <br>${address.jobDesc}
+            <br>${address.jobSage}`
+          );
+  
+          // Add click event to marker
+          marker.on('click', function (e) {
+            map.setView(e.target.getLatLng(), 15);
+          });
+  
+          marker.addTo(map);
+          markers.push(marker);
+  
+          const row = list.insertRow();
+          let cell = row.insertCell();
+          cell.textContent = address.jobName;
+          cell = row.insertCell();
+          cell.textContent = address.jobType;
+          cell = row.insertCell();
+          cell.textContent = address.state.substring(0, 2);
+  
+          // Zoom to pin after clicking on project in table
+          row.addEventListener('click', function () {
+            map.setView([coords.lat, coords.lng], 15);
+          });
+  
+          // Add the marker animation when hovering over a table row
+          row.addEventListener('mouseover', function () {
+            marker.setOpacity(0.5); // Set the opacity to a lower value
+          });
+  
+          row.addEventListener('mouseout', function () {
+            marker.setOpacity(1); // Reset the opacity back to 1
+          });
+        })
+        .catch(error => console.error('Geocoding error', error));
     });
-}
+  }
+  
+  
+  
+  
+  
+  
+  
