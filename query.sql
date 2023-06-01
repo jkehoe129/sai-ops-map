@@ -78,3 +78,98 @@ SELECT
 ,'PA OFFICE'
 ,'Todd Higginbotton'
 ,'PA-000-00000'
+
+
+
+
+
+
+
+ISNULL(
+    CASE
+    WHEN SUBSTRING(E.Job,4,1) = '3' THEN 'Eric Campbell'
+    WHEN SUBSTRING(E.Job,4,3) IN ('130') THEN 'Eric Campbell'
+    WHEN E.[Customer] = 'ATT001' THEN 'Warren Kelleher'
+    WHEN SUBSTRING(E.Job,4,3) IN ('122','123') AND E.[PO Line Description] LIKE '%construction project management%' THEN 'Paul Kean'
+    WHEN SUBSTRING(E.Job,4,3) IN ('122','123') AND E.[PO Line Description] NOT LIKE '%construction project management%' THEN 'Warren Kelleher'
+    ELSE NULL
+    END,ISNULL((SELECT TOP 1 P.SAI_Lead FROM SAI_ProposalTable P WHERE P.SAGE_ID = E.Job ORDER BY Proposal_ID DESC),'NOT IN BIDLOGGER')
+ ) AS 'PM'
+
+
+
+
+
+
+
+
+ -----------------------
+ SELECT
+    E.[PO&Line Number]
+    ,E.[SITE]
+    ,E.[Site Name]
+    ,E.[Project_Type]
+    ,E.[Contract]
+    ,E.[Job]
+    ,E.[PACE Task]
+    ,E.[Milestone]
+    ,E.[FA]
+    ,E.[PO Number]
+    ,E.[Line Number]
+    ,E.[PO Line Description]
+    ,E.[Revised_Contract]
+    ,E.[Adjustment]
+    ,E.[Total_Billed]
+    ,E.[Cash_Receipt]
+    ,E.[Tax]
+    ,E.[Vendor_PO_Tax]
+    ,E.[Invoice]
+    ,E.[Invoice_Date]
+    ,E.[Revised_Invoice]
+    ,E.[Customer]
+    ,E.[Orig PO Date Rec]
+    ,E.[Line Revision Date]
+    ,E.[Notes]
+    ,E.[Address_2]
+    ,E.[City]
+    ,E.[State]
+    ,ISNULL(
+        CASE
+        WHEN SUBSTRING(E.Job,4,1) = '3' THEN 'Eric Campbell'
+        WHEN SUBSTRING(E.Job,4,3) IN ('130') THEN 'Eric Campbell'
+        WHEN E.[Customer] = 'ATT001' THEN 'Warren Kelleher'
+        WHEN SUBSTRING(E.Job,4,3) IN ('122','123') AND E.[PO Line Description] LIKE '%construction project management%' THEN 'Paul Kean'
+        WHEN SUBSTRING(E.Job,4,3) IN ('122','123') AND E.[PO Line Description] NOT LIKE '%construction project management%' THEN 'Warren Kelleher'
+        ELSE NULL
+        END
+        ,ISNULL((SELECT TOP 1 P.SAI_Lead FROM SAI_ProposalTable P WHERE P.SAGE_ID = E.Job ORDER BY Proposal_ID DESC),'NOT IN BIDLOGGER')
+ ) AS 'PM'
+    ,E.PM AS 'sagePM'
+    ,B.Line_Action
+    ,B.Line_Notes
+    ,B.Modified
+    ,B.ModifiedBy
+    ,CASE
+    WHEN E.[PO Number] IS NULL AND E.[Line Number] <> 1111 THEN ISNULL(E.[Revised_Contract],0) - ISNULL(E.[Total_Billed],0)
+    WHEN E.[PO Number] NOT LIKE '%NO PO%' AND RIGHT(E.[PO Number],1) <> '.' AND E.[Line Number] <> 1111 THEN ISNULL(E.[Revised_Contract],0) - ISNULL(E.[Total_Billed],0)
+    ELSE 0
+    END AS 'OPEN-PO'
+    ,CASE
+    WHEN E.[PO Number] LIKE '%NO PO%' OR RIGHT(E.[PO Number],1) = '.' OR E.[Line Number] = 1111 THEN ISNULL(E.[Revised_Contract],0) - ISNULL(E.[Total_Billed],0)
+    ELSE 0
+    END AS 'OPEN-PO-PH'
+FROM sai_tracker.dbo.Erica_Contracts_with_PACE_and_ProjectType E
+INNER JOIN SAGE_Type S
+    ON SUBSTRING(E.Job,4,3) = S.SAGE_Code
+LEFT JOIN sai_tracker.dbo.OPS_Billable_Tracker B
+ON B.Line_Item_ID = E.Job + '|' + E.[PO&Line Number]
+WHERE E.[Revised_Contract] - ISNULL(E.[Total_Billed],0) <> 0
+    AND SUBSTRING(E.Job,4,3) <> '999'
+    AND E.[Credit_Memo] IS NULL    
+ORDER BY 
+    (SELECT TOP 1 P.SAI_Lead 
+    FROM SAI_ProposalTable P 
+    WHERE P.SAGE_ID = E.Job 
+    ORDER BY Proposal_ID DESC)
+    , E.[Project_Type],E.[Job]
+
