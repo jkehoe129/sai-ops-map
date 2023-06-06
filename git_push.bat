@@ -8,4 +8,4 @@ git add .
 git commit -m "commit"
 git push
 
-pause
+timeout /t 10 >nul
